@@ -1,36 +1,15 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+## Notes
 
-## Getting Started
+- I unfortunatly didn't have time to have all the filters to work. I tried to focus on one of each type (price, brand, on sale).
 
-First, run the development server:
+## Improvements
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+- Add a loading state to make the filtering UX smoother.
+- Add filter functionality for all the facets and find a better way that doesn't require a switch statement.
+- Add the wishlist functinality.
+- Improve the pagination UI.
+- I didn't spend as much time as I usually do on making it accessible (eg. productCard shouldn't be a link, the title of the card should be the link and then I'd use the ::before pseudo element to make the whole card clickable).
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## Questions
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
-
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+- The way to fetch the data is unusual: I don't understand why I use POST method when I'm not creating new data. I'd be interested to hear more about it!
