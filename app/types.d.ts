@@ -1,18 +1,19 @@
-export type TQuery = {
+type TQuery = {
   pageNumber: number;
+  selectedFacets: TSelectedFacets;
 };
 
-export type TData = {
+type TData = {
   products: TProduct[];
   facets: TFilters;
   pagination: TPagination;
 };
 
-export type TPagination = {
+type TPagination = {
   total: number;
 };
 
-export type TProduct = {
+type TProduct = {
   id: string;
   productName: string;
   price: TPrice;
@@ -23,7 +24,7 @@ export type TProduct = {
   reviewsCount: number;
 };
 
-export type TPrice = {
+type TPrice = {
   currencyCode: string;
   isOnPromotion: boolean;
   priceExcTax: number;
@@ -32,22 +33,22 @@ export type TPrice = {
   wasPriceIncTax: number;
 };
 
-export type TBrand = {
+type TBrand = {
   name: string;
   slug: string;
   brandImage: TImage;
 };
 
-export type TImage = {
+type TImage = {
   url: string;
   attributes: {
     imageAltText: string;
   };
 };
 
-export type TFilters = Record<string, TFacet>;
+type TFilters = Record<string, TFacet>;
 
-export type TFacet = {
+type TFacet = {
   displayName: string;
   identifier: string;
   priority: number;
@@ -55,32 +56,19 @@ export type TFacet = {
   facetType: number;
 };
 
-export type TFacetOption = {
+type TFacetOption = {
   displayValue: string;
   identifier: string;
   productCount: number;
+  value: string | boolean | TFacetPriceOptionValue;
 };
 
-export type TFacetOptionString = TFacetOption & {
-  value: string;
-};
-
-export type TFacetOptionBoolean = TFacetOption & {
-  value: boolean;
-};
-
-export type TFacetOptionPrice = TFacetOption & {
-  displayValue: string;
-  productCount: number;
-  value: TFacetPriceOptionValue;
-};
-
-export type TFacetPriceOptionValue = {
+type TFacetPriceOptionValue = {
   gte: number;
   lte: number;
 };
 
-export type TSelectedFacets = {
+type TSelectedFacets = {
   [facetIdentifier: string]: (
     | TFacetOptionString
     | TFacetOptionBoolean

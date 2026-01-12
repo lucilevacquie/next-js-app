@@ -1,5 +1,4 @@
 import { HeartIcon } from "@heroicons/react/24/outline";
-import { TProduct } from "../types";
 import { StarRating } from "./starRating";
 
 const ProductCard = (product: TProduct) => (

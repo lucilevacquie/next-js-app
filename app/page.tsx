@@ -4,10 +4,9 @@ import Filters from "./components/filters";
 import Pagination from "./components/pagination";
 import ProductCard from "./components/productCard";
 import { useProductContext } from "./context/productContext";
-import { TProduct } from "./types";
 
 export default function Page() {
-  const { facets, filteredProducts } = useProductContext();
+  const { products } = useProductContext();
 
   return (
     <>
@@ -27,14 +26,14 @@ export default function Page() {
         </p>
       </header>
       <section className="relative flex gap-4 mx-auto max-w-2xl px-4 py-16 sm:px-6 sm:py-24 lg:max-w-7xl lg:px-8">
-        {facets && <Filters {...facets} />}
+        <Filters />
         <div>
           <h2 className="text-xl font-bold text-gray-900 mb-4 sm:text-3xl">
             Shop all our products
           </h2>
-          {filteredProducts && filteredProducts?.length > 0 ? (
+          {products && products?.length > 0 ? (
             <ul className="grid grid-cols-1 gap-x-6 gap-y-10 sm:grid-cols-2 lg:grid-cols-3 xl:gap-x-8">
-              {filteredProducts.map((product: TProduct) => (
+              {products.map((product: TProduct) => (
                 <li key={product.id}>
                   <ProductCard {...product} />
                 </li>

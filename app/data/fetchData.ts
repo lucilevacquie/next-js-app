@@ -1,6 +1,4 @@
-import { TQuery } from "../types";
-
-export async function fetchData({ pageNumber }: TQuery) {
+export async function fetchData({ pageNumber, selectedFacets }: TQuery) {
   const res = await fetch(
     "https://spanishinquisition.victorianplumbing.co.uk/interviews/listings?apikey=yj2bV48J40KsBpIMLvrZZ1j1KwxN4u3A83H8IBvI",
     {
@@ -11,6 +9,7 @@ export async function fetchData({ pageNumber }: TQuery) {
         size: 0,
         additionalPages: pageNumber + 1,
         sort: 1,
+        facets: selectedFacets,
       }),
       headers: {
         "Content-Type": "application/json",

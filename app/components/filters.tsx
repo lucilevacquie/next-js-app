@@ -1,51 +1,42 @@
 "use client";
 
 import { useState } from "react";
-import {
-  TFacet,
-  TFacetOptionBoolean,
-  TFacetOptionPrice,
-  TFacetOptionString,
-  TFilters,
-} from "../types";
 import { useProductContext } from "../context/productContext";
 
 import StringFilter from "./stringFilter";
 import PriceFilter from "./priceFilter";
 
-const numberOfInitialOptions = 6;
+const NUMBER_OF_INITIAL_OPTIONS = 6;
 
 type ExpandedFacets = Record<string, boolean>;
 
-const Filters = ({ ...facets }: TFilters) => {
-  const { selectedFacets, setSelectedFacets } = useProductContext();
+const Filters = () => {
+  const { facets, selectedFacets, setSelectedFacets } = useProductContext();
 
-  const isSameValue = (
-    a: (TFacetOptionString | TFacetOptionBoolean | TFacetOptionPrice)["value"],
-    b: (TFacetOptionString | TFacetOptionBoolean | TFacetOptionPrice)["value"]
-  ) => {
-    if (typeof a === "object" && typeof b === "object") {
-      return JSON.stringify(a) === JSON.stringify(b);
-    }
-    return a === b;
-  };
-
-  const toggleFacetOption = (
-    facet: TFacet,
-    option: TFacetOptionString | TFacetOptionBoolean | TFacetOptionPrice
-  ) => {
+  const toggleFacetOption = (facet: TFacet, option: TFacetOption) => {
     setSelectedFacets((prev) => {
       const facetId = facet.identifier;
       const current = prev[facetId] ?? [];
 
-      const exists = current.some((v) => isSameValue(v, option.value));
+      const exists = current.some((v) => v.identifier === option.identifier);
 
-      return {
+      const optionObject = {
+        identifier: option.identifier,
+        value: option.value,
+      };
+
+      let nextSelectedFacet = {
         ...prev,
         [facetId]: exists
-          ? current.filter((v) => !isSameValue(v, option.value))
-          : [...current, option.value],
+          ? current.filter((v) => v.identifier !== option.identifier)
+          : [...current, optionObject],
       };
+
+      if (nextSelectedFacet[facetId].length === 0) {
+        delete nextSelectedFacet[facetId];
+      }
+
+      return nextSelectedFacet;
     });
   };
 
@@ -62,7 +53,7 @@ const Filters = ({ ...facets }: TFilters) => {
     const isExpanded = expandedFacets[facet.identifier];
     return isExpanded
       ? facet.options
-      : facet.options.slice(0, numberOfInitialOptions);
+      : facet.options.slice(0, NUMBER_OF_INITIAL_OPTIONS);
   };
 
   return (
@@ -93,22 +84,20 @@ const Filters = ({ ...facets }: TFilters) => {
                 <fieldset>
                   {facet.facetType === 20 ? (
                     <PriceFilter
-                      visibleOptions={visibleOptions as TFacetOptionPrice[]}
+                      visibleOptions={visibleOptions}
                       selectedValues={selectedFacets[facet.identifier] ?? []}
                       onToggle={(option) => toggleFacetOption(facet, option)}
-                      isSameValue={isSameValue}
                       className="px-4"
                     />
                   ) : facet.facetType === 10 ? (
                     <StringFilter
-                      visibleOptions={visibleOptions as TFacetOptionString[]}
+                      visibleOptions={visibleOptions}
                       selectedValues={selectedFacets[facet.identifier] ?? []}
                       onToggle={(option) => toggleFacetOption(facet, option)}
-                      isSameValue={isSameValue}
                       className="px-4"
                     />
                   ) : null}
-                  {facet.options.length > numberOfInitialOptions && (
+                  {facet.options.length > NUMBER_OF_INITIAL_OPTIONS && (
                     <button
                       type="button"
                       onClick={() => toggleFacetExpansion(facet.identifier)}

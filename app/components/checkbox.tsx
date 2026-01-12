@@ -1,7 +1,5 @@
-import { TFacetOptionPrice, TFacetOptionString } from "../types";
-
 type TCheckbox = {
-  option: TFacetOptionString | TFacetOptionPrice;
+  option: TFacetOption;
   checked: boolean;
   onChange: () => void;
 };
